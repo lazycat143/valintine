@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be my Valentine?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fff5f8; /* Бело-розовый фон */
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            touch-action: manipulation; /* Улучшает отклик на мобильных */
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4);
+            width: 350px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Стили для картинок */
+        .cat-img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 26px;
+            margin-bottom: 30px;
+            min-height: 60px;
+        }
+
+        .btn-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            height: 60px;
+            align-items: center;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+        }
+
+        #noBtn {
+            background-color: #f777f0;
+            color: #ffffff;
+            position: relative; /* В начале стоит в ряд */
+            z-index: 1000;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Анимация для "I love you" */
+        .love-text {
+            color: #ff1493;
+            font-size: 32px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="question-section">
+            <img id="main-pic" src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZjY0NjNtMWxnMzdqeXpid3RweWlpZzMxdjhsMjR2dWg0ODMzYjl3MSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/16OzPTMlBMiH6Yze1n/giphy.gif" alt="Waiting cat" class="cat-img">
+            <h1>Will u be my valentine? ❤️</h1>
+            
+            <div class="btn-wrapper">
+                <button id="yesBtn">Да!</button>
+                <button id="noBtn">Нет</button>
+            </div>
+        </div>
+
+        <div id="success-section" class="hidden">
+            <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2pkaDBxeWVwa3NtcGx3bmxyaG9rMW95cmdnNjB2Y2s1eDlib2ZieiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/W1hd3uXRIbddu/giphy.gif" alt="Happy cats" class="cat-img">
+            <h1 class="love-text">Love u babe💖</h1>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const qSection = document.getElementById('question-section');
+        const sSection = document.getElementById('success-section');
+
+        // Функция убегания
+        function escape() {
+            // Переводим кнопку в фиксированное положение, чтобы она летала по всему экрану
+            noBtn.style.position = 'fixed';
+            
+            // Вычисляем случайные координаты (с отступом от краев)
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40) + 20;
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40) + 20;
+
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        // Для ПК: убегает при наведении
+        noBtn.addEventListener('mouseover', escape);
+
+        // Для телефонов: убегает при попытке нажать
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Блокирует само нажатие
+            escape();
+        });
+
+        // На всякий случай, если все же кликнули (через табуляцию или баг)
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            escape();
+        });
+
+        // Логика кнопки "Да"
+        yesBtn.addEventListener('click', () => {
+            qSection.classList.add('hidden');
+            sSection.classList.remove('hidden');
+            // Убираем кнопку Нет совсем, если она где-то летает
+            noBtn.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
